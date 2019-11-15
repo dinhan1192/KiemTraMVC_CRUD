@@ -1,0 +1,74 @@
+﻿@model IEnumerable<KiemTra_CRUD.Models.Product>
+    @using KiemTra_CRUD.Services
+
+@{
+    ViewBag.Title = "Default";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Default</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Stt")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    @{ var index = Model.Select((c, i) => new { Product = c, Index = i })
+        .Where(x => x.Product.Id == item.Id)
+        .Select(x => x.Index).FirstOrDefault();
+        int indexShow = (int)index + 1;
+        }
+    <td>
+        @Html.DisplayFor(modelItem => @indexShow)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Description)
+    </td>
+    @*<td>
+            @Html.DisplayFor(modelItem => item.Image)
+        </td>*@
+    <td>
+        @*@Html.Image("~/Images/Trump.jpg", "alt", "100")*@
+        <img src="@Url.Content(item.Image)" height="50" width="50" />
+    </td>
+    @*<td>
+            @Html.DisplayFor(modelItem => item.CreatedAt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdatedAt)
+        </td>*@
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Display", "Display", new { id = item.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+    </td>
+</tr>
+}
+
+</table>
